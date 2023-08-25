@@ -51,32 +51,41 @@ function boomer(y, x) {
       arr[1] = arr[1] + 2;
       break;
   }
-  if (max < arr[1]) {
-    max = arr[1];
-  }
+  return arr[1];
 }
 
 function controller(y, x) {
+  let spot = [];
   let max = 0;
-  
-  cnt = boomer(y - 1, x);
-  cnt = boomer(y, x - 1)
-  cnt = boomer(y, x);
-  cnt = boomer(y + 1, x);
-  cnt = boomer(y, x + 1);
+  let cnt;
+
+  spot.push([y - 1, x]);
+  spot.push([y, x - 1]);
+  spot.push([y, x]);
+  spot.push([y + 1, x]);
+  spot.push([y, x + 1]);
+
+  spot.forEach((arr) => {
+    let [y, x] = arr;
+
+    cnt = boomer(y, x);
+    if (cnt > max)
+      max = cnt;
+  });
   return max;
 }
 
 // N K goorm location
 rl.on('close', () => {
+  let max = 0;
+
   location.forEach((val) => {
     let [y, x] = val;
     let cnt;
 
     cnt = controller(y, x);
-    if (max < cnt) {
+    if (cnt > max)
       max = cnt;
-    }
   })
   console.log(max);
 })
