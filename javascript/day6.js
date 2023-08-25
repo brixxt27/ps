@@ -62,12 +62,11 @@ rl.on('close', () => {
   let total = []; // 3 개씩 배열
   let notDup = []; // 1차원
   let a = 0;
-  let b = 1;
+  let b;
   let c = 2;
 
-  for (; b < c; b++) {
-    c = b + 1;
-    for (; c < N; c++) {
+  for (b = 1; b < c; b++) {
+    for (c = b + 1; c < N; c++) {
       total.push([s.slice(a, b), s.slice(b, c), s.slice(c, N)]);
     }
   }

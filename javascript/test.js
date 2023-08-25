@@ -1,9 +1,11 @@
-class obj {
-  name;
-  age;
-  aa;
+const array1 = ['a', 'b', 'c'];
+const iterator = array1.values();
+
+// console.log(iterator);
+for (const value of iterator) {
+  console.log(value);
 }
-console.log(obj.age);
-console.log(obj.name_); // name 이라는 프로퍼티가 존재함
-console.log(obj.aa);
-obj.na
+
+// Expected output: "a"
+// Expected output: "b"
+// Expected output: "c"
