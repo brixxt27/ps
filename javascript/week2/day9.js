@@ -51,6 +51,8 @@ function boomer(y, x) {
       arr[1] = arr[1] + 2;
       break;
   }
+  // test
+  console.log(ground);
   return arr[1];
 }
 
