@@ -20,6 +20,7 @@ class Area {
   count;
   command;
   isVisited = false;
+  isDone = false;
 };
 
 let N;
@@ -68,18 +69,75 @@ function transformFromMinusToPlus(num) {
   return num;
 }
 
-function calcurateMove(count, command, r, c) {
-  // let afterR;
-  // let afterC;
+function caseU(r, c, count) {
+  let min;
+  let i;
+  let cnt = 0;
 
+  afterR = r - count;
+  if (afterR < 0) {
+    min = afterR + N;
+    i = N - 1;
+    for (let j = r; j >= 0; j--) {
+      if (board[j][c].isVisited === true) {
+        board[j][c].isDone = true;
+        j--;
+        break;
+      }
+      cnt++;
+      board[j][c].isVisited = true;
+    }
+    return [i + 1, c, cnt];
+  }
+  else {
+    min = afterR;
+    i = r;
+  }
+  for (; min <= i; i--) {
+    if (board[i][c].isVisited === true) {
+      board[i][c].isDone = true;
+      i--;
+      break;
+    }
+    cnt++;
+    board[i][c].isVisited = true;
+  }
+  return [i + 1, c, cnt];
+  // let i;
+  // let max;
+  // let cnt = 0;
+
+  // afterR = r - count;
+  // if (afterR < 0) {
+  //   i = afterR + N;
+  //   max = N;
+  // }
+  // else {
+  //   i = afterR;
+  //   max = r;
+  // }
+  // for (; i < max; i++) {
+  //   if (board[i][c].isVisited === true) {
+  //     board[i][c].isDone = true;
+  //     i++;
+  //     break;
+  //   }
+  //   cnt++;
+  //   board[i][c].isVisited = true;
+  // }
+  // return [i - 1, c, cnt];
+}
+
+function moveOneCommand(count, command, r, c) {
+  let cnt;
+
+  // console.log(count, r, c)
   switch (command) {
     case 'U':
-      // afterR = r - count;
-      if (r < 0)
-        r = transformFromMinusToPlus(r);
+      [r, c, cnt] = caseU(r, c, count)
       break;
     case 'L':
-      c -= count;
+      afterC = c - count;
       if (c < 0)
         c = transformFromMinusToPlus(c);
       break;
@@ -93,7 +151,7 @@ function calcurateMove(count, command, r, c) {
       break;
   }
   // console.log(r, c);
-  return [r, c];
+  return [r, c, cnt];
 }
 
 function startGame(R, C) {
@@ -105,27 +163,45 @@ function startGame(R, C) {
     let obj = board[r][c];
 
     // console.log(obj);
-    // ret++;
-    // obj.isVisited = true;
-    [r, c] = calcurateMove(obj.count, obj.command, r, c);
-    // if (board[r][c].isVisited === true)
-    //   break;
+    [r, c, cnt] = moveOneCommand(obj.count, obj.command, r, c);
+    // console.log(r, c, cnt)
+    ret += cnt;
+    if (board[r][c].isDone === true)
+      break;
   }
   return ret;
 }
 
+function resetBoard() {
+  board.forEach((arr) => {
+    arr.forEach((obj) => {
+      obj.isVisited = false;
+      obj.isDone = false;
+    })
+  })
+}
+
+function mainConsole(r, c, cnt, board) {
+  console.log('r:', r, 'c:', c);
+  console.log(cnt);
+  console.log(board);
+}
+
 rl.on('close', () => {
-  let goormiCnt;;
+  let goormCnt;
   let playerCnt;
   
-  // goormiCnt = startGame(goorm.r, goorm.c);
+  // goormCnt = startGame(goorm.r, goorm.c);
+  // mainConsole(goorm.r, goorm.c, goormCnt, board);
+  // resetBoard();
   playerCnt = startGame(player.r, player.c);
-  // if (playerCnt > goormiCnt) {
+  mainConsole(player.r, player.c, playerCnt, board);
+  // if (playerCnt > goormCnt) {
   //   console.log('player', playerCnt);
   // }
   // else {
-  //   console.log('goorm', goormiCnt);
+  //   console.log('goorm', goormCnt);
   // }
-  console.log(board);
+  // console.log(goormCnt);
 })
 
