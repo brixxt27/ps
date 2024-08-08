@@ -1,14 +1,15 @@
 import java.util.Scanner;
 
-public class B27866 {
-	private static void printStr(String str) {
+class Main {
+	private static void printStr(char str) {
 		System.out.println(str);
 	}
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		String str = scanner.nextLine();
+		String s = scanner.nextLine();
+		int i = scanner.nextInt();
 
-		printStr(str);
+		printStr(s.charAt((i - 1)));
 	}
 }
