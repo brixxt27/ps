@@ -4,17 +4,16 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-let sum = 0;
-let i = 0;
+let arr;
 
 rl.on("line", (input) => {
-  let arr = input.split(" ");
+  arr = input.split(" ");
   rl.close();
 });
 
 rl.on("close", () => {
-  arr.forEach((num) => {
-    sum += Number(num);
-  });
-  console.log(sum);
+  let A = parseInt(arr[0]);
+  let B = parseInt(arr[1]);
+  let ret = (A + B) * (A - B);
+  console.log(ret);
 });
